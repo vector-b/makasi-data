@@ -4,22 +4,22 @@ A partir das informações disponíveis no diretório ./src/datasets/ gere uma e
 
 ## Como começar o desafio
 
-Dar um fork no projeto, clonar o repositório em sua máquina local, e caso veja a necessidade de usar código, criar um branch novo, lenvando o nome do candidato.
-Não é obrigatório o uso de código para entregar o objetivo do desafio, mas caso use, esse código deve ser carregado na nova branch criada na entrega do desafio.
+Dar um fork no projeto, clonar o repositório em sua máquina local, e caso veja a necessidade de usar código, criar um branch novo, identificando com o seu nome.
+Não é obrigatório o uso de código para entregar o objetivo do desafio, mas caso use, esse código deve ser carregado na nova branch criada para a entrega do desafio.
 
 ## Histórias
 
 • Como orçamentista, eu gostaria de um previsão do orçamento da casa denominada "Projeto 4" em reais.
 
-• Como engenheiro responsável pelo projeto, eu gostaria de ter a documentação completa do metodo usado para chegar ao valor previsto para o "Projeto 4", incluindo cálculos.
+• Como engenheiro responsável pelo projeto, eu gostaria de ter a documentação completa do método usado para chegar ao valor previsto para o "Projeto 4", incluindo cálculos.
 
-• Como gerente comercial da conta do cliente do "Projeto 4", eu gostaria de ter uma base estatistica para indicar o quão aproximado o valor estipulado está da realidade, e no caso de variação, quanto para mais ou menos esse valor pode variar.
+• Como gerente comercial da conta do cliente do "Projeto 4", eu gostaria de ter uma base estatística para indicar o quão aproximado o valor estipulado está da realidade, e no caso de variação, quanto esse valor pode variar.
 
-• Como responsável pela gestão de risco de projetos, eu gostaria de entender o risco implicito nessa previsão, indicando o que pode impactar em outliers ou variações acima do previsto.
+• Como responsável pela gestão de risco de projetos, eu gostaria de entender o risco implícito nessa previsão, indicando o que pode impactar em outliers ou variações acima do previsto.
 
 ## Referências
 
-• Os datasets necessário para o teste se encontram no diretório /src/datasets/ dentro do projeto.
+• Os datasets necessários para o teste se encontram no diretório /src/datasets/ dentro do projeto.
 
 • Os datasets trazidos nesse projeto são amostras proprietárias da Makasí e devem ser usados única e exclusivamente para a finalidade desse desafio.
 
@@ -30,7 +30,7 @@ Não é obrigatório o uso de código para entregar o objetivo do desafio, mas c
 
 • Utilize seus padrões de organização de projeto, documentação e código.
 
-• Pode ser utilizada qualquer lib adicional que julgar importante para o bom funcionamento da exploração dos datasets, mas não se esqueça de dar as orientações de instalação delas (caso seja necessário)
+• Pode ser utilizada qualquer lib adicional que julgar importante para o bom funcionamento da exploração dos datasets, mas não se esqueça de dar as orientações de instalação delas (caso seja necessário).
 
 • Caso haja uma aplicação em código, está será rodada em localhost.
 
@@ -40,8 +40,6 @@ Não é obrigatório o uso de código para entregar o objetivo do desafio, mas c
 
 • Documentos adicionais (PDF, PowerPoint, Planilhas e etc) ao teste devem ser compartilhados e enviados para fabiane+dados@makasi.com.br
 
-• O prazo máximo para o envio o teste é de 5 dias uteis. Caso este prazo não seja viável, basta informar quando poderá entregá-lo pelo mesmo e-mail em que recebeu o teste.
-
 
 ## Observações importantes
 
@@ -49,15 +47,15 @@ A ideia deste desafio é entender como você domina os conceitos de exploração
 
 Fique à vontade para optar pelos caminhos que desejar sobre qualquer ponto que esteja ausente na instrução. Nossa intenção também é entender como você toma decisões. De qualquer forma, você pode fazer perguntas por e-mail.
 
-Além do que foi pedido nos requisitos técnicos acima, não existe “certo e errado”, da mesma forma que não vamos levar tudo ao pé da letra nos mínimos detalhes.
+Além do que foi pedido nos requisitos técnicos acima, não existe “certo ou errado”, da mesma forma que não vamos levar tudo ao pé da letra nos mínimos detalhes.
 
 ## Considerações finais
 
 Buscamos entender seu perfil de desenvolvimento, resolução de problemas, raciocinio lógico e boas práticas de análise e ciência de dados. 
 
-Esperamos que você vá além do mínimo proposto e demostre o conhecimento que tem. O teste tem gaps propositais para você sugerir soluções, desenvolver ideias e provar na prática o porque a sua decisão pode ter um impacto positivo nessa tarefa.
+Esperamos que você vá além do mínimo proposto e demostre o conhecimento que tem. O teste tem gaps propositais para você sugerir soluções, desenvolver ideias e provar na prática o porquê a sua decisão pode ter um impacto positivo nessa tarefa.
 
-No demais, o diálogo é sempre bem-vindo e incentivado, principalmente sugestões e discussões. Caso surjam dúvidas no processo, sintam-se à vontade para nos perguntar.
+No mais, o diálogo é sempre bem-vindo e incentivado, principalmente sugestões e discussões. Caso surjam dúvidas no processo, sintam-se à vontade para nos perguntar.
 
 Boa sorte no teste!
 
