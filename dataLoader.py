@@ -7,6 +7,12 @@ class DataLoader:
     def _get_filepath(self, data_dir, file_name):
         return f"{data_dir}/{file_name}"
 
+    def _convert_money_columns_to_float(self, df, columns):
+        for col in columns:
+            df[col] = df[col].apply(lambda x: float(x.replace('R$', '').replace('.', '').replace(',', '.')) if isinstance(x, str) else x)
+        return df
+
+
     def _load_data_from_path(self, data_dir, file_names):
         for name in file_names:
             path = self._get_filepath(data_dir, name)
@@ -31,6 +37,9 @@ class DataLoader:
             df.columns = ['Item', 'Referência', 'Tipo', 'Código', 'Descrição', 'Unid.', 'Quantidade', 'BDI', 
               'Preço Material (Unitário)', 'Preço Material (Total)', 'Preço Execução (Unitário)', 
               'Preço Execução (Total)', 'Preço (Unitário)', 'Preço (Total)']
+
+            price_columns = [col for col in df.columns if 'Preço' in col]
+            df = self._convert_money_columns_to_float(df, price_columns)
 
             key_name = name.replace('.csv', '')
             self.dfs[key_name] = {
