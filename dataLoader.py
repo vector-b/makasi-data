@@ -12,7 +12,6 @@ class DataLoader:
             df[col] = df[col].apply(lambda x: float(x.replace('R$', '').replace('.', '').replace(',', '.')) if isinstance(x, str) else x)
         return df
 
-
     def _load_data_from_path(self, data_dir, file_names):
         for name in file_names:
             path = self._get_filepath(data_dir, name)
@@ -23,6 +22,9 @@ class DataLoader:
             header.columns = ['Info', 'Valor']
             header = header.dropna(subset=['Info', 'Valor'])
             header = header[['Info', 'Valor']]
+
+
+            header_T = header.set_index('Info').T
 
             '''Caso de MultiIndex:
                 Preço Material - Preço Execução - Preço
@@ -44,5 +46,12 @@ class DataLoader:
             key_name = name.replace('.csv', '')
             self.dfs[key_name] = {
                 'header': header,
+                'header_T': header_T,
                 'budget': df
             }
+    
+    def _compile_T_headers(self):
+        headers = []
+        for key in self.dfs:
+            headers.append(self.dfs[key]['header_T'])
+        return pd.concat(headers)
