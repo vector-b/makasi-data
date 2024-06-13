@@ -28,10 +28,8 @@ class DataProcessor:
             budget_key = header_row['File']
             table_budget = self.data_loader.dfs[budget_key]['budget']
 
-            # Calculate total cost for this specific budget table
             total_cost = table_budget['Preço (Total)'].sum()
 
-            #do the same for the other two columns Preço Material (Total) and Preço Execução (Total)
             total_material_cost = table_budget['Preço Material (Total)'].sum()
             total_execution_cost = table_budget['Preço Execução (Total)'].sum()
 
@@ -39,9 +37,6 @@ class DataProcessor:
             total_costs.append(total_cost)
             total_material_costs.append(total_material_cost)
             total_execution_costs.append(total_execution_cost)
-
-              # Optional: Print for verification
-
         
         headers['Total Material Cost'] = total_material_costs
         headers['Total Execution Cost'] = total_execution_costs

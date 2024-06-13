@@ -13,7 +13,6 @@ class DataLoader:
         return df
 
     def _convert_values_to_float(self, df, columns):
-        #first replace , by . and then convert to float
         for col in columns:
             try:
                 df[col] = df[col].apply(lambda x: float(x.replace(',', '.')) if isinstance(x, str) else x)
@@ -37,7 +36,6 @@ class DataLoader:
 
             float_cols = ['Área Terreno', 'Área Construída', 'Área Fundação', 'Área Fachada', 'Área Parede', 'Qtde BWCs']
             header_T = self._convert_values_to_float(header_T, float_cols)
-            #add a new column to the header_T DataFrame with the file name as the first column
             header_T.insert(0, 'File', name.replace('.csv', ''))
 
             '''Caso de MultiIndex:
