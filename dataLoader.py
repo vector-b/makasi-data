@@ -12,6 +12,15 @@ class DataLoader:
             df[col] = df[col].apply(lambda x: float(x.replace('R$', '').replace('.', '').replace(',', '.')) if isinstance(x, str) else x)
         return df
 
+    def _convert_values_to_float(self, df, columns):
+        #first replace , by . and then convert to float
+        for col in columns:
+            try:
+                df[col] = df[col].apply(lambda x: float(x.replace(',', '.')) if isinstance(x, str) else x)
+            except:
+                pass
+        return df
+    
     def _load_data_from_path(self, data_dir, file_names):
         for name in file_names:
             path = self._get_filepath(data_dir, name)
@@ -25,6 +34,11 @@ class DataLoader:
 
 
             header_T = header.set_index('Info').T
+
+            float_cols = ['Área Terreno', 'Área Construída', 'Área Fundação', 'Área Fachada', 'Área Parede', 'Qtde BWCs']
+            header_T = self._convert_values_to_float(header_T, float_cols)
+            #add a new column to the header_T DataFrame with the file name as the first column
+            header_T.insert(0, 'File', name.replace('.csv', ''))
 
             '''Caso de MultiIndex:
                 Preço Material - Preço Execução - Preço
