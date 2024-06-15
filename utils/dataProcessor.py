@@ -13,9 +13,9 @@ class DataProcessor:
         total_cost = budget['Preço (Total)'].sum()
         
         return {
-            'Total Material Cost': total_material_cost,
-            'Total Execution Cost': total_execution_cost,
-            'Total Cost': total_cost
+            'total_material_cost': total_material_cost,
+            'total_execution_cost': total_execution_cost,
+            'total_cost': total_cost
         }
 
     def aggregate_header_totals(self):
@@ -25,7 +25,7 @@ class DataProcessor:
         total_execution_costs = []
 
         for _, header_row in headers.iterrows():
-            budget_key = header_row['File']
+            budget_key = header_row['file']
             table_budget = self.data_loader.dfs[budget_key]['budget']
 
             total_cost = table_budget['Preço (Total)'].sum()
@@ -38,11 +38,9 @@ class DataProcessor:
             total_material_costs.append(total_material_cost)
             total_execution_costs.append(total_execution_cost)
         
-        headers['Total Material Cost'] = total_material_costs
-        headers['Total Execution Cost'] = total_execution_costs
-        headers['Total Cost'] = total_costs
+        headers['total_material_cost'] = total_material_costs
+        headers['total_execution_cost'] = total_execution_costs
+        headers['total_cost'] = total_costs
 
+        headers.reset_index(drop=True, inplace=True)
         return headers
-
-
-    

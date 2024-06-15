@@ -20,23 +20,35 @@ class DataLoader:
                 pass
         return df
     
+    def _rename_columns(self, df):
+        df.columns = [col.lower().replace(' ', '_').replace('á', 'a').replace('`', '') for col in df.columns]
+        return df
+
+
+    def _process_header(self, path, file_name):
+        header = pd.read_csv(path, skiprows=1, nrows=8, header=None)
+        header = header.iloc[:, :2]
+        header.columns = ['Info', 'Valor']
+        header = header.dropna(subset=['Info', 'Valor'])
+        header = header[['Info', 'Valor']]
+
+        header_T = header.set_index('Info').T
+
+        float_cols = ['Área Terreno', 'Área Construída', 'Área Fundação', 'Área Fachada', 'Área Parede', 'Qtde BWCs']
+        header_T = self._convert_values_to_float(header_T, float_cols)
+        header_T.insert(0, 'File', file_name.replace('.csv', ''))
+        header_T = self._rename_columns(header_T)
+
+        header_T.reset_index(drop=True, inplace=True)
+
+
+        return header, header_T
+
     def _load_data_from_path(self, data_dir, file_names):
         for name in file_names:
             path = self._get_filepath(data_dir, name)
             '''Leitor de Header - Primeiras 9 linhas'''
-            header = pd.read_csv(path,skiprows=1, nrows=8, header=None)
-
-            header = header.iloc[:, :2]
-            header.columns = ['Info', 'Valor']
-            header = header.dropna(subset=['Info', 'Valor'])
-            header = header[['Info', 'Valor']]
-
-
-            header_T = header.set_index('Info').T
-
-            float_cols = ['Área Terreno', 'Área Construída', 'Área Fundação', 'Área Fachada', 'Área Parede', 'Qtde BWCs']
-            header_T = self._convert_values_to_float(header_T, float_cols)
-            header_T.insert(0, 'File', name.replace('.csv', ''))
+            header, header_T = self._process_header(path, name)
 
             '''Caso de MultiIndex:
                 Preço Material - Preço Execução - Preço
@@ -62,6 +74,13 @@ class DataLoader:
                 'budget': df
             }
     
+    def _load_predict_set(self, data_dir, file_name):
+        path = self._get_filepath(data_dir, file_name)
+        header, header_T = self._process_header(path, file_name)
+
+        self.predict_df = header_T
+        return header, header_T
+        
     def _compile_T_headers(self):
         headers = []
         for key in self.dfs:
