@@ -44,6 +44,15 @@ class DataLoader:
 
         return header, header_T
 
+
+    def _grouping_cod_by_key(self, df, column):
+        cod_values = df.dropna(subset=[column])[column]
+        split_values = cod_values.str.split('-', expand=True)
+        split_values[0]
+        df['Categoria'] = split_values[0]
+        return df
+        
+
     def _load_data_from_path(self, data_dir, file_names):
         for name in file_names:
             path = self._get_filepath(data_dir, name)
@@ -66,6 +75,8 @@ class DataLoader:
 
             price_columns = [col for col in df.columns if 'Preço' in col]
             df = self._convert_money_columns_to_float(df, price_columns)
+
+            self._grouping_cod_by_key(df, 'Código')
 
             key_name = name.replace('.csv', '')
             self.dfs[key_name] = {

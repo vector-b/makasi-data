@@ -17,6 +17,7 @@ class DataProcessor:
             'total_execution_cost': total_execution_cost,
             'total_cost': total_cost
         }
+    
 
     def aggregate_header_totals(self):
         headers = self.data_loader._compile_T_headers()
