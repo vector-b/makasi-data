@@ -68,7 +68,7 @@ class DataProcessor:
         #to_Print
         all_combined.reset_index(drop=True, inplace=True)
         #to_Print
-        all_combined = all_combined.pivot_table(index=['file', 'titulo', 'tipologia', 'area_terreno', 'area_construída', 'area_fundação', 'area_fachada', 'area_parede', 'qtde_bwcs'],
+        all_combined = all_combined.pivot_table(index=['file', 'titulo', 'tipologia', 'area_terreno', 'area_construída', 'area_fundação', 'area_fachada', 'area_parede', 'qtde_bwcs', 'area_construída_por_bwc'],
                           columns='Descrição',
                           values='Preço (Total)',
                           aggfunc='sum').reset_index()

@@ -6,6 +6,8 @@
 - Importância da análise de dados
 
 ## Análise de Dados
+**AVISO IMPORTANTÍSSIMO:** <br>
+O conjunto de dados utilizado é extremamente pequeno e pode não ser representativo de um problema real. A análise de dados e o modelo de machine learning foram criados com base nesses dados, e não necessariamente refletem a realidade. O objetivo é mostrar o processo de análise de dados e machine learning, e não necessariamente criar um modelo preciso.
 
 ### Arquivos disponíveis
 Foram disponibilizados 4 arquivos, sendo 4 csv e 1 xlsx. Os arquivos foram importados para o ambiente de desenvolvimento e carregados em DataFrames. Os arquivos mencionados são:
@@ -64,26 +66,46 @@ Consulte a seção "Estruturas e Dataframes" para mais detalhes sobre a estrutur
 ### Exploração inicial dos dados
 Após a importação dos dados, foi realizada uma exploração inicial dos dados. Foram verificados os tipos de dados, a presença de valores nulos, cabeçalhos e outras informações relevantes para a análise.
 
-- Valores nulos: Os valores nulos são apropriados para esse problema. A presença de valores nulos pode indicar que o item não é de fato um objeto físico, mas sim um serviço ou etapa do projeto, é interessante checar os valores de Execução e Material, porém sempre haverá um valor total para cada item.
+- Valores nulos: Os valores nulos são apropriados para esse problema. A presença de valores nulos pode indicar que o item não é de fato um objeto físico, mas sim um serviço ou etapa do projeto, é interessante checar os valores de Execução e Material, porém sempre haverá um valor total para cada entrada.
 
-- Tipos de dados: Os tipos de dados foram verificados e estão coerentes com o esperado. Os valores numéricos estão como float e int, e as strings estão como object.
+- Tipos de dados: Após o processamento dos dados, os tipos de dados foram ajustados para os tipos corretos. Os valores numéricos foram convertidos para float, e os valores monetários foram convertidos para float.
+
+- Outliers: Não foram identificados outliers nos dados.
+
+- Colinearidade: Há uma certa colinearidade entre algumas variáveis, como a quantidade de banheiros e a área construída. A quantidade de banheiros possui uma correlação positiva com o orçamento total do projeto. Quanto mais banheiros, maior o orçamento e área. Com isso, foi criada uma nova variável que é a razão entre a quantidade de banheiros e a área construída, que possui uma correlação positiva com o orçamento total do projeto.
 
 
+
+### Insights obtidos
+
+Primeiramente, ao juntar as tabelas de sumário do projeto e de orçamento, foi possível identificar algumas relações entre as variáveis.
+A correlação entre as variáveis foi calculada e foi possível identificar algumas relações interessantes:
+
+![Matriz de correlação](imgs/corr_simplified.png)
+
+Nessa matriz simplificada podemos observar que:
+- A quantidade de banheiros (BWCs) possui uma correlação positiva com o orçamento total do projeto. Quanto mais banheiros, maior o orçamento e área. Com isso, foi criada uma nova variável que é a razão entre a quantidade de banheiros e a área construída, que possui uma correlação positiva com o orçamento total do projeto.
+
+- A área do terreno tem uma correlação média positiva com a área construída, o que nos leva a entender que não necessariamnte por se haver mais espaço terá mais construção. Possuindo mais dados de tipos de residências, poderíamos entender melhor essa relação entre espaço livre e construído.
+
+- Ao trabalharmos com a razão entre a quantidade de banheiros e a área construída, percebemos que a correlação com o orçamento total do projeto é menor do que a quantidade de banheiros isoladamente. O que pode nos dar uma informação mais confiável sobre a relação dessas variáveis e o orçamento.
+
+![Correlação entre BWCs e Área Construída](imgs/corr_simplified_bwc.png)
+
+- A correlação entre banheiros por área construída agora é de 0.6, o que interpreta-se como uma correlação moderada. Isso nos dá uma informação mais confiável sobre a relação dessas variáveis e o orçamento.
+
+Para trabalharmos com as categorias únicas de orçamento no dataset e entendermos melhor a relação entre elas e as variáveis do projeto, foi necessário juntarmos as duas tabelas, header e orçamento, e agregarmos os valores de orçamento por categoria única. Com isso, foi possível criar uma matriz de correlação extendida, que nos dá uma visão mais ampla das relações entre as variáveis.
    
+![Correlação Extentida](imgs/corr_extended.png)
+
+Essa é matriz de correlação contendo as _Categorias Únicas e seu total de orçamento_. 
+
+Aqui está ela ajustada com a nova variável criada, a razão entre a quantidade de banheiros e a área construída.
+
+![Correlação Extentida com BWCs por Área Construída](imgs/corr_extended_bwc.png)
 
 
-
-
-
-- Pré-processamento dos dados
-- Exploração inicial dos dados
-- Insights obtidos
-
-## Manipulação de Tabelas
-- Transformação e limpeza dos dados
-- Criação de novas variáveis
-- Agregação e sumarização dos dados
-
+Em geral
 ## Machine Learning
 - Preparação dos dados para treinamento
 - Escolha do algoritmo de machine learning
