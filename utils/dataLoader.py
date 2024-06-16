@@ -45,12 +45,24 @@ class DataLoader:
         return header, header_T
 
 
-    def _grouping_cod_by_key(self, df, column):
-        cod_values = df.dropna(subset=[column])[column]
-        split_values = cod_values.str.split('-', expand=True)
-        split_values[0]
-        df['Categoria'] = split_values[0]
-        return df
+    def _grouping_item_totals(self, data):
+        df = data.copy()
+        df['Categoria'] = df['Item'].apply(lambda x: x.split('.')[0])
+        df['Item'] = df['Item'].str.replace('.', '')
+        df['Item'] = df['Item'].astype(int)
+
+        df_grouped = df.groupby('Categoria').agg({
+            'Item': 'first',
+            'Descrição': 'first',
+            'Preço Material (Total)' : 'sum',
+            'Preço Execução (Total)': 'sum',
+            'Preço (Total)': 'sum'
+        }).reset_index(drop=True)
+
+        df_grouped.sort_values('Item', inplace=True)
+        df_grouped.set_index('Item', inplace=True)
+
+        return df_grouped
         
 
     def _load_data_from_path(self, data_dir, file_names):
@@ -75,8 +87,6 @@ class DataLoader:
 
             price_columns = [col for col in df.columns if 'Preço' in col]
             df = self._convert_money_columns_to_float(df, price_columns)
-
-            self._grouping_cod_by_key(df, 'Código')
 
             key_name = name.replace('.csv', '')
             self.dfs[key_name] = {
