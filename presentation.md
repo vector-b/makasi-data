@@ -86,32 +86,49 @@ A correlação entre as variáveis foi calculada e foi possível identificar alg
 Nessa matriz simplificada podemos observar que:
 - A quantidade de banheiros (BWCs) possui uma correlação positiva com o orçamento total do projeto. Quanto mais banheiros, maior o orçamento e área. Com isso, foi criada uma nova variável que é a razão entre a quantidade de banheiros e a área construída, que possui uma correlação positiva com o orçamento total do projeto.
 
-- A área do terreno tem uma correlação média positiva com a área construída, o que nos leva a entender que não necessariamnte por se haver mais espaço terá mais construção. Possuindo mais dados de tipos de residências, poderíamos entender melhor essa relação entre espaço livre e construído.
+- A área do terreno tem uma correlação média positiva com a área construída, o que nos leva a entender que não necessariamnte por se haver mais espaço terá mais construção. Possuindo mais dados de tipologia, poderíamos entender melhor essa relação entre espaço livre e construído.
 
+<!---
 - Ao trabalharmos com a razão entre a quantidade de banheiros e a área construída, percebemos que a correlação com o orçamento total do projeto é menor do que a quantidade de banheiros isoladamente. O que pode nos dar uma informação mais confiável sobre a relação dessas variáveis e o orçamento.
 
 ![Correlação entre BWCs e Área Construída](imgs/corr_simplified_bwc.png)
 
 - A correlação entre banheiros por área construída agora é de 0.6, o que interpreta-se como uma correlação moderada. Isso nos dá uma informação mais confiável sobre a relação dessas variáveis e o orçamento.
-
+--->
 Para trabalharmos com as categorias únicas de orçamento no dataset e entendermos melhor a relação entre elas e as variáveis do projeto, foi necessário juntarmos as duas tabelas, header e orçamento, e agregarmos os valores de orçamento por categoria única. Com isso, foi possível criar uma matriz de correlação extendida, que nos dá uma visão mais ampla das relações entre as variáveis.
    
 ![Correlação Extentida](imgs/corr_extended.png)
 
 Essa é matriz de correlação contendo as _Categorias Únicas e seu total de orçamento_. 
 
+<!---
 Aqui está ela ajustada com a nova variável criada, a razão entre a quantidade de banheiros e a área construída.
 
 ![Correlação Extentida com BWCs por Área Construída](imgs/corr_extended_bwc.png)
+--->
+
+## Predições e Machine Learning
+Nesse projeto a utilização de técnicas de machine learning e métodos estatísticos mais avançados foi um tanto limitada devido a quantidade de dados, afinal com apenas 3 projetos completos e 1 incompleto, não é possível criar um modelo de machine learning que generalize bem para novos dados. Além disso, até métricas de avaliação de modelos como o R² e RMSE não seriam confiáveis com tão poucos dados.
+
+Porém, foi possível criar um modelo de regressão linear simples para prever o orçamento total do projeto com base em algumas variáveis. O modelo foi treinado com os dados dos projetos 1, 2 e 3, e testado com os dados do projeto 4.
+
+### Variáveis utilizadas
+As variáveis utilizadas para a previsão do orçamento total do projeto foram:
+    - Tipologia
+    - Área Construída
+    - Área Terreno
+    - Área Fachada
+    - Área Parede
+    - Valor Total 
+
+### Encoding e Normalização
+Para a utilização das variáveis categóricas, foi necessário realizar o encoding das variáveis categóricas. Foi utilizado o método de _One Hot Encoding_ para a variável _Tipologia_.
+
+As variáveis numéricas foram normalizadas utilizando o método _MinMaxScaler_.
+
+### Treinamento do modelo
 
 
-Em geral
-## Machine Learning
-- Preparação dos dados para treinamento
-- Escolha do algoritmo de machine learning
-- Treinamento do modelo
-- Avaliação do modelo
-- Insights obtidos com o modelo
 
 ## Conclusão
 - Recapitulação dos principais pontos

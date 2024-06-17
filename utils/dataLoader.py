@@ -37,7 +37,7 @@ class DataLoader:
         float_cols = ['Área Terreno', 'Área Construída', 'Área Fundação', 'Área Fachada', 'Área Parede', 'Qtde BWCs']
         header_T = self._convert_values_to_float(header_T, float_cols)
         header_T.insert(0, 'File', file_name.replace('.csv', ''))
-        header_T['Área Construída por BWC'] = header_T['Área Construída'] / header_T['Qtde BWCs']
+        #header_T['Área Construída por BWC'] = header_T['Área Construída'] / header_T['Qtde BWCs']
         header_T = self._rename_columns(header_T)
         #create a new column that is an operation of two columns (Área Construída / Qtde BWCs)
         
