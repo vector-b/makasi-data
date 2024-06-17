@@ -134,14 +134,45 @@ No caso da predição do projeto 4, o modelo foi treinado com os dados dos proje
 ### Resultados
 Podemos separar os resultados por diferentes metodologias de treino e teste.
 #### Leave One Out Cross Validation
+Leave One Out Cross Validation é um método de validação cruzada que consiste em treinar o modelo com todos os dados, exceto um, e testar o modelo com o dado que foi excluído. Esse processo é repetido para todos os dados.
+##### Resultados
+| Target | split_index | MSE | MAE | RMSE |
+|---|---|---|---|---|
+| total_execution_cost | 0 | 7.183527e+09 | 84755.69 | 84755.69 |
+| total_execution_cost | 1 | 1.071489e+11 | 327336.03 | 327336.03 |
+| total_execution_cost | 2 | 1.669600e+11 | 408607.34 | 408607.34 |
+| total_material_cost | 0 | 1.562918e+11 | 395337.63 | 395337.63 |
+| total_material_cost | 1 | 5.560229e+11 | 745669.44 | 745669.44 |
+| total_material_cost | 2 | 1.416731e+12 | 1190264.94 | 1190264.94 |
+| total_cost | 0 | 2.304896e+11 | 480093.31 | 480093.31 |
+| total_cost | 1 | 1.151341e+12 | 1073005.48 | 1073005.48 |
+| total_cost | 2 | 2.556393e+12 | 1598872.28 | 1598872.28 |
+
+#### Predição do Projeto 4
+Para a predição do projeto 4, o modelo foi treinado com os dados dos projetos 1, 2 e 3, e testado com o projeto 4.
+##### Resultados
+| Column | Value |
+|---|---|
+| total_execution_cost | 1325055.01 |
+| total_material_cost | 2687063.71 |
+| total_cost | 4012118.72 |
 
 
 ## Conclusão
-- Recapitulação dos principais pontos
-- Resultados alcançados
-- Lições aprendidas
-- Próximos passos
+### Resultados
+Com esse experimento, foi possível criar um modelo de regressão linear simples para prever o orçamento total do projeto com base em algumas variáveis. Todavia, é importante ressaltar que o modelo não é preciso e não generaliza bem para novos dados. A quantidade de dados é muito pequena e não é possível criar um modelo confiável com tão poucos dados.
 
-## Referências
-- Links para recursos utilizados
-- Referências bibliográficas
+Com os insights obtidos, foi possível identificar algumas relações entre as variáveis e o orçamento total do projeto. A quantidade de banheiros possui uma correlação positiva com o orçamento total do projeto. Quanto mais banheiros, maior o orçamento e área. A área do terreno tem uma correlação média positiva com a área construída, o que nos leva a entender que não necessariamnte por se haver mais espaço disponível haveram maiores construções, apesar de que espaço construiído sempre será menor que o espaço disponível (essa correlação sempre será positiva).
+
+Mais dados seriam úteis para entender melhor essas relações e também criar um modelo mais preciso.
+
+### Respostas ao Desafio
+- A estimativa de custo para o "projeto 4" foi de R$ 4.012.118,72.
+- A documentação tanto do método usado para chegar ao valor previsto para o "Projeto 4", quanto das etapas e ferramentas usadas no processo estão descritas no documento [class_structure.md](class_structure.md).
+- O nível de acuracidade da estimativa é baixo, devido a quantidade de dados disponíveis. O modelo não generaliza bem para novos dados e não é preciso. Porém as melhores métricas obtidas foram, com base no RMSE (Root Mean Squared Error), que significa a raiz do erro quadrático médio, que é uma medida de dispersão dos dados:
+    - RMSE total_execution_cost: 327336.03
+    - RMSE total_material_cost: 395337.63
+    - RMSE total_cost: 480093.31
+
+    Ou seja, o modelo tem um erro médio de R$ 327.336,03 para o custo total de execução, R$ 395.337,63 para o custo total de material e R$ 480.093,31 para o custo total do projeto.
+- O risco implícito nessa previsão é alto, devido a quantidade de dados disponíveis. Recomenda-se a coleta de mais dados para criar um modelo mais preciso e ter métricas mais confiáveis. E realizar predições baseadas apenas nas colunas do cabeçalho do projeto, como foi feito nesse experimento, talvez não seja a melhor abordagem.

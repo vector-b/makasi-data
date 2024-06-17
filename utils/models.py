@@ -1,7 +1,7 @@
 from sklearn.linear_model import LinearRegression
 from sklearn.preprocessing import OneHotEncoder
 from sklearn.preprocessing import MinMaxScaler, StandardScaler
-from sklearn.metrics import mean_squared_error, r2_score, mean_absolute_error
+from sklearn.metrics import mean_squared_error, r2_score, mean_absolute_error, root_mean_squared_error
 import statsmodels.api as sm
 import pandas as pd
 
@@ -24,6 +24,9 @@ class Predictor:
         return self.model.predict(X)
     
     def _get_metrics(self, y, pred):
-        print(f'MSE: {mean_squared_error(y, pred)}')
-        print(f'MAE: {mean_absolute_error(y, pred)}')
+        #print metrics rounded to 2 decimal places
+        print(f'MSE: {round(mean_squared_error(y, pred), 2)}')
+        print(f'MAE: {round(mean_absolute_error(y, pred), 2)}')
+        print(f'RMSE: {round(root_mean_squared_error(y, pred), 2)}')
+
         
