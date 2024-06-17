@@ -127,7 +127,13 @@ Para a utilização das variáveis categóricas, foi necessário realizar o enco
 As variáveis numéricas foram normalizadas utilizando o método _MinMaxScaler_.
 
 ### Treinamento do modelo
+Como temos poucos dados, foi utilizado o método de Leave One Out Cross Validation para treinar o modelo. O modelo foi treinado com os dados dos projetos 1, 2 e testado com o projeto 3. 
 
+No caso da predição do projeto 4, o modelo foi treinado com os dados dos projetos 1, 2 e 3, e testado com o projeto 4.
+
+### Resultados
+Podemos separar os resultados por diferentes metodologias de treino e teste.
+#### Leave One Out Cross Validation
 
 
 ## Conclusão

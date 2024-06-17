@@ -1,7 +1,10 @@
 import pandas as pd
+from sklearn.preprocessing import MinMaxScaler, OneHotEncoder, StandardScaler
 class DataProcessor:
     def __init__(self, data_loader):
         self.data_loader = data_loader
+        self.encoder = OneHotEncoder(handle_unknown='ignore', sparse_output=False)
+        self.scaler = MinMaxScaler()
 
     def _get_stats_by_key(self, key):
         budget = self.data_loader.dfs[key]['budget']
@@ -19,6 +22,62 @@ class DataProcessor:
             'total_cost': total_cost
         }
     
+    def _fit_encoder(self, df, value='tipologia'):
+        self.encoder.fit(df[[value]])
+        return self.encoder
+
+    def _fit_scaler(self, df, numerical_columns):
+        self.scaler.fit(df[numerical_columns])
+        return self.scaler
+
+
+    def _separate_numerical_categorical(self, df):
+        numerical = df.select_dtypes(include=['float64', 'int64']).columns
+        categorical = df.select_dtypes(include=['object']).columns
+        return numerical, categorical
+    
+    def _transform_df(self, data,  scaler, encoder, use_scaler=True, value='tipologia'):
+
+        df = data.copy()
+
+        numerical, categorical = self._separate_numerical_categorical(df)
+        if use_scaler:
+            scaled = scaler.transform(df[numerical]) 
+            scaled = pd.DataFrame(scaled, columns=numerical)
+            df = df.drop(numerical, axis=1)
+
+            df.reset_index(drop=True, inplace=True)
+            scaled.reset_index(drop=True, inplace=True)
+
+            scaled = pd.concat([df, scaled], axis=1)
+        else:
+            
+            scaled = df
+
+        one_hot_encoded = encoder.transform(scaled[[categorical[0]]])
+        one_hot_encoded_df = pd.DataFrame(one_hot_encoded, columns=self.encoder.get_feature_names_out([value]))
+        
+        scaled.reset_index(drop=True, inplace=True)
+        one_hot_encoded_df.reset_index(drop=True, inplace=True)
+
+        scaled = scaled.drop(categorical[0], axis=1)
+
+        encoded = pd.concat([scaled, one_hot_encoded_df], axis=1)
+
+        return encoded
+    
+    def _encode_train_data(self, X, use_scaler=True):
+        numerical, categorical = self._separate_numerical_categorical(X)
+
+        scaler = self._fit_scaler(X, numerical)
+        encoder = self._fit_encoder(X, categorical[0])
+        
+        X_encoded = self._transform_df(X, scaler, encoder)
+        return X_encoded, scaler, encoder
+    
+    def _encode_test_data(self, X, scaler, encoder, use_scaler=True):
+        X_encoded = self._transform_df(X, scaler, encoder)
+        return X_encoded
     
     def aggregate_header_totals(self):
         headers = self.data_loader._compile_T_headers()
