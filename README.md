@@ -160,7 +160,7 @@ Essa é matriz de correlação contendo as _Categorias Únicas e seu total de or
 ## Predições e Machine Learning
 Nesse projeto a utilização de técnicas de machine learning e métodos estatísticos mais avançados foi um tanto limitada devido a quantidade de dados, afinal com apenas 3 projetos completos e 1 incompleto, não é possível criar um modelo de machine learning que generalize bem para novos dados. Além disso, até métricas de avaliação de modelos como o R² e RMSE não seriam confiáveis com tão poucos dados.
 
-Porém, foi possível criar um modelo de regressão linear simples para prever o orçamento total do projeto com base em algumas variáveis. O modelo foi treinado com os dados dos projetos 1, 2 e 3, e testado com os dados do projeto 4.
+Porém, foi possível criar um modelo de regressão linear para prever o orçamento total do projeto com base em algumas variáveis. O modelo foi treinado com os dados dos projetos 1, 2 e 3, e testado com os dados do projeto 4.
 
 ### Variáveis utilizadas
 As variáveis utilizadas para a previsão do orçamento total do projeto foram:
@@ -182,6 +182,8 @@ Esse modelo segue o seguinte formato:
     y = b0 + b1*x1 + b2*x2 + ... + bn*xn
 Que pode ser escrito de forma matricial:
     y = X * b
+
+Por ser um problema não tão complexo, um modelo de regressão linear é suficiente para prever o orçamento total do projeto, caso utilizassemos mais variáveis, e tivéssemos um volume maior de dados, possívelmente um modelo mais complexo talvez fosse necessário.
 
 O modelo foi importado da biblioteca _sklearn_ correspondendo a classe _LinearRegression_.
 Como temos poucos dados, foi utilizado o método de Leave One Out Cross Validation para treinar o modelo. O modelo foi treinado com os dados dos projetos 1, 2 e testado com o projeto 3. 
