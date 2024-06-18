@@ -13,7 +13,7 @@ Os arquivos disponíveis para esse desafio são:
 - 'amostras_projetos.xlsx'
 
 #### Documentação
-A documentação de CLASSES e FUNÇÕES está disponível na pasta docs.
+A documentação de CLASSES e FUNÇÕES está disponível na pasta _docs/_.
 
 #### Requirements
 O arquivo requirements.txt contém as dependências necessárias para rodar o projeto.
