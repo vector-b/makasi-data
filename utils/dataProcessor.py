@@ -1,16 +1,55 @@
 import pandas as pd
 from sklearn.preprocessing import MinMaxScaler, OneHotEncoder, StandardScaler
 class DataProcessor:
+    """
+        This class is responsible for processing the data and preparing it for the model and for further analysis
+        It diverges from the DataLoader class, which is responsible for loading the data from the csv files
+        Here, we will process the data, calculate statistics and prepare the data for the model
+
+    """
     def __init__(self, data_loader):
+        """
+            Function to initialize the DataProcessor object
+
+            Initial variables:
+                data_loader: DataLoader object - it will be used to access the data previously loaded
+                encoder: OneHotEncoder object
+                scaler: MinMaxScaler object
+
+            Args:
+                data_loader: DataLoader object
+
+        """
         self.data_loader = data_loader
         self.encoder = OneHotEncoder(handle_unknown='ignore', sparse_output=False)
         self.scaler = MinMaxScaler()
 
-    def _get_stats_by_key(self, key):
+    def get_stats_by_key(self, key) -> pd.DataFrame:
+        """
+            Function to get the statistics of the budget dataframe (second table) given a key
+
+            Args:
+                key: str
+
+            Returns:
+        """
         budget = self.data_loader.dfs[key]['budget']
         return budget.describe()
 
-    def _calculate_totals(self, key):
+    def calculate_totals(self, key) -> dict:
+        """
+            Function to calculate the total costs of the budget dataframe,
+            It gets the sum of the 'Preço Material (Total)', 'Preço Execução (Total)' and 'Preço (Total)' columns
+            and returns a dictionary with the results
+
+            Args:
+
+                key: str
+
+            Returns:
+                dict
+
+        """
         budget = self.data_loader.dfs[key]['budget']
         total_material_cost = budget['Preço Material (Total)'].sum()
         total_execution_cost = budget['Preço Execução (Total)'].sum()
@@ -22,37 +61,76 @@ class DataProcessor:
             'total_cost': total_cost
         }
     
-    def _fit_encoder(self, df, value='tipologia'):
+    def fit_encoder(self, df, value='tipologia') -> OneHotEncoder:
+        """
+            Function to fit the OneHotEncoder
+
+            Args:
+                df: pandas DataFrame
+                value: str
+
+            Returns:
+                OneHotEncoder object
+        """
         self.encoder.fit(df[[value]])
         return self.encoder
 
-    def _fit_scaler(self, df, numerical_columns):
+    def fit_scaler(self, df, numerical_columns) -> MinMaxScaler:
+        """
+            Function to fit the MinMaxScaler
+
+            Args:
+                df: pandas DataFrame
+                numerical_columns: list
+
+            Returns:
+                MinMaxScaler object
+        """
         self.scaler.fit(df[numerical_columns])
         return self.scaler
 
 
-    def _separate_numerical_categorical(self, df):
+    def separate_numerical_categorical(self, df) -> tuple:
+        """
+            Function to separate the numerical and categorical columns of a DataFrame
+
+            Args:
+                df: pandas DataFrame
+
+            Returns:
+                tuple
+        """
         numerical = df.select_dtypes(include=['float64', 'int64']).columns
         categorical = df.select_dtypes(include=['object']).columns
         return numerical, categorical
     
-    def _transform_df(self, data,  scaler, encoder, use_scaler=True, value='tipologia'):
+    def transform_df(self, data,  scaler, encoder, value='tipologia') -> pd.DataFrame:
+        """
+            Function to transform the DataFrame using the fitted MinMaxScaler and OneHotEncoder
+
+            Args:
+                data: pandas DataFrame
+                scaler: MinMaxScaler object
+                encoder: OneHotEncoder object
+                value: str
+
+            Returns:
+                pandas DataFrame
+        """
 
         df = data.copy()
 
-        numerical, categorical = self._separate_numerical_categorical(df)
-        if use_scaler:
-            scaled = scaler.transform(df[numerical]) 
-            scaled = pd.DataFrame(scaled, columns=numerical)
-            df = df.drop(numerical, axis=1)
+        numerical, categorical = self.separate_numerical_categorical(df)
+        
+        scaled = scaler.transform(df[numerical]) 
+        scaled = pd.DataFrame(scaled, columns=numerical)
+        df = df.drop(numerical, axis=1)
 
-            df.reset_index(drop=True, inplace=True)
-            scaled.reset_index(drop=True, inplace=True)
+        df.reset_index(drop=True, inplace=True)
+        scaled.reset_index(drop=True, inplace=True)
 
-            scaled = pd.concat([df, scaled], axis=1)
-        else:
-            
-            scaled = df
+        scaled = pd.concat([df, scaled], axis=1)
+    
 
         one_hot_encoded = encoder.transform(scaled[[categorical[0]]])
         one_hot_encoded_df = pd.DataFrame(one_hot_encoded, columns=self.encoder.get_feature_names_out([value]))
@@ -66,21 +144,51 @@ class DataProcessor:
 
         return encoded
     
-    def _encode_train_data(self, X, use_scaler=True):
-        numerical, categorical = self._separate_numerical_categorical(X)
+    def encode_train_data(self, X) -> tuple:
+        """
+            Function to separate the numerical and categorical columns of a DataFrame and fit the MinMaxScaler and OneHotEncoder
 
-        scaler = self._fit_scaler(X, numerical)
-        encoder = self._fit_encoder(X, categorical[0])
+            Args:
+                X: pandas DataFrame
+
+            Returns:
+                tuple            
+        """
+        numerical, categorical = self.separate_numerical_categorical(X)
+
+        scaler = self.fit_scaler(X, numerical)
+        encoder = self.fit_encoder(X, categorical[0])
         
-        X_encoded = self._transform_df(X, scaler, encoder)
+        X_encoded = self.transform_df(X, scaler, encoder)
         return X_encoded, scaler, encoder
     
-    def _encode_test_data(self, X, scaler, encoder, use_scaler=True):
-        X_encoded = self._transform_df(X, scaler, encoder)
+    def encode_test_data(self, X, scaler, encoder) -> pd.DataFrame:
+        """
+            Function to transform the DataFrame using the previously fitted MinMaxScaler and OneHotEncoder
+
+            Args:
+                X: pandas DataFrame
+                scaler: MinMaxScaler object
+                encoder: OneHotEncoder object
+            
+            Returns:
+                pandas DataFrame
+        """
+
+        X_encoded = self.transform_df(X, scaler, encoder)
         return X_encoded
     
-    def aggregate_header_totals(self):
-        headers = self.data_loader._compile_T_headers()
+    def aggregate_header_totals(self) -> pd.DataFrame:
+        """
+            Function to aggregate the total costs of the budget tables
+
+            Args:
+                None
+            
+            Returns:
+                pandas DataFrame
+        """
+        headers = self.data_loader.compile_T_headers()
         total_costs = []
         total_material_costs = []
         total_execution_costs = []
@@ -108,7 +216,17 @@ class DataProcessor:
         #self.headers_list = headers
         return headers
     
-    def _concat_tables(self, headers):
+    def concat_tables(self, headers):
+        """
+            Function to concatenate the budget tables with the header tables
+            For each header, it will concatenate the budget table with the transposed header table from headers
+
+            Args:
+                headers: pandas DataFrame
+            
+            Returns:
+                pandas DataFrame
+        """
 
         for _, header_row in headers.iterrows():
             budget_key = header_row['file']
@@ -116,7 +234,7 @@ class DataProcessor:
             table_t_header = self.data_loader.dfs[budget_key]['header_T']
 
 
-            grouped_budget = self.data_loader._grouping_item_totals(table_budget)
+            grouped_budget = self.data_loader.grouping_item_totals(table_budget)
             combined_data = pd.concat([table_t_header]*grouped_budget.shape[0], ignore_index=True)
             combined_data = pd.concat([grouped_budget, combined_data], axis=1)
 
@@ -133,3 +251,4 @@ class DataProcessor:
                           aggfunc='sum').reset_index()
         
         return all_combined
+    
