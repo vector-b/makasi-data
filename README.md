@@ -24,7 +24,12 @@ O arquivo requirements.txt contém as dependências necessárias para rodar o pr
 - utils/ - Contém os códigos de funções auxiliares para a execução do projeto. 
 
 #### Usage
-Primeiro instale as dependências necessárias:
+Inicialmente clone o repositório:
+```bash
+git clone https://github.com/vector-b/makasi-data
+```
+
+Instale as dependências necessárias:
 ```bash
 pip install -r requirements.txt
 ```
