@@ -144,31 +144,18 @@ Após a importação dos dados, foi realizada uma exploração inicial dos dados
 Primeiramente, ao juntar as tabelas de sumário do projeto e de orçamento, foi possível identificar algumas relações entre as variáveis.
 A correlação entre as variáveis foi calculada e foi possível identificar algumas relações interessantes:
 
-![Matriz de correlação](imgs/corr_simplified.png)
+![Matriz de correlação](src/imgs/corr_simplified.png)
 
 Nessa matriz simplificada podemos observar que:
 - A quantidade de banheiros (BWCs) possui uma correlação positiva com o orçamento total do projeto. Quanto mais banheiros, maior o orçamento e área. Com isso, foi criada uma nova variável que é a razão entre a quantidade de banheiros e a área construída, que possui uma correlação positiva com o orçamento total do projeto.
 
 - A área do terreno tem uma correlação média positiva com a área construída, o que nos leva a entender que não necessariamnte por se haver mais espaço terá mais construção. Possuindo mais dados de tipologia, poderíamos entender melhor essa relação entre espaço livre e construído.
 
-<!---
-- Ao trabalharmos com a razão entre a quantidade de banheiros e a área construída, percebemos que a correlação com o orçamento total do projeto é menor do que a quantidade de banheiros isoladamente. O que pode nos dar uma informação mais confiável sobre a relação dessas variáveis e o orçamento.
-
-![Correlação entre BWCs e Área Construída](imgs/corr_simplified_bwc.png)
-
-- A correlação entre banheiros por área construída agora é de 0.6, o que interpreta-se como uma correlação moderada. Isso nos dá uma informação mais confiável sobre a relação dessas variáveis e o orçamento.
---->
 Para trabalharmos com as categorias únicas de orçamento no dataset e entendermos melhor a relação entre elas e as variáveis do projeto, foi necessário juntarmos as duas tabelas, header e orçamento, e agregarmos os valores de orçamento por categoria única. Com isso, foi possível criar uma matriz de correlação extendida, que nos dá uma visão mais ampla das relações entre as variáveis.
    
-![Correlação Extentida](imgs/corr_extended.png)
+![Correlação Extentida](src/imgs/corr_extended.png)
 
 Essa é matriz de correlação contendo as _Categorias Únicas e seu total de orçamento_. 
-
-<!---
-Aqui está ela ajustada com a nova variável criada, a razão entre a quantidade de banheiros e a área construída.
-
-![Correlação Extentida com BWCs por Área Construída](imgs/corr_extended_bwc.png)
---->
 
 ## Predições e Machine Learning
 Nesse projeto a utilização de técnicas de machine learning e métodos estatísticos mais avançados foi um tanto limitada devido a quantidade de dados, afinal com apenas 3 projetos completos e 1 incompleto, não é possível criar um modelo de machine learning que generalize bem para novos dados. Além disso, até métricas de avaliação de modelos como o R² e RMSE não seriam confiáveis com tão poucos dados.
@@ -238,7 +225,7 @@ Mais dados seriam úteis para entender melhor essas relações e também criar u
 
 ### Respostas ao Desafio
 - A estimativa de custo para o "projeto 4" foi de R$ 4.012.118,72.
-- A documentação tanto do método usado para chegar ao valor previsto para o "Projeto 4", quanto das etapas e ferramentas usadas no processo estão descritas no documento [class_structure.md](class_structure.md).
+- A documentação tanto do método usado para chegar ao valor previsto para o "Projeto 4", quanto das etapas e ferramentas usadas no processo estão descritas neste mesmo documento, mais informações sobre as classes e funções utilizadas estão disponíveis na pasta docs.
 - O nível de acuracidade da estimativa é baixo, devido a quantidade de dados disponíveis. O modelo não generaliza bem para novos dados e não é preciso. Porém as melhores métricas obtidas foram, com base no RMSE (Root Mean Squared Error), que significa a raiz do erro quadrático médio, que é uma medida de dispersão dos dados:
     - RMSE total_execution_cost: 327336.03
     - RMSE total_material_cost: 395337.63
