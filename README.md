@@ -207,6 +207,15 @@ Leave One Out Cross Validation é um método de validação cruzada que consiste
 | total_cost | 1 | 1.151341e+12 | 1073005.48 | 1073005.48 |
 | total_cost | 2 | 2.556393e+12 | 1598872.28 | 1598872.28 |
 
+As médias dos erros quadráticos médios (MSE), erros absolutos médios (MAE) e raízes do erro quadrático médio (RMSE) foram:
+
+| Target               | Média MSE       | Média MAE   | Média RMSE  |
+|----------------------|-----------------|-------------|-------------|
+| total_execution_cost | 9.80425e+10     | 273233.02   | 273233.02   |
+| total_material_cost  | 7.096482e+11    | 778090.67   | 778090.67   |
+| total_cost           | 1.31240867e+12  | 1050657.69  | 1050657.69  |
+
+
 #### Predição do Projeto 4
 Para a predição do projeto 4, o modelo foi treinado com os dados dos projetos 1, 2 e 3, e testado com o projeto 4.
 ##### Resultados
@@ -229,9 +238,10 @@ Mais dados seriam úteis para entender melhor essas relações e também criar u
 - A estimativa de custo para o "projeto 4" foi de R$ 4.012.118,72.
 - A documentação tanto do método usado para chegar ao valor previsto para o "Projeto 4", quanto das etapas e ferramentas usadas no processo estão descritas neste mesmo documento, mais informações sobre as classes e funções utilizadas estão disponíveis na pasta _docs/_.
 - O nível de acuracidade da estimativa é baixo, devido a quantidade de dados disponíveis. O modelo não generaliza bem para novos dados e não é preciso. Porém as melhores métricas obtidas foram, com base no RMSE (Root Mean Squared Error), que significa a raiz do erro quadrático médio, que é uma medida de dispersão dos dados:
-    - RMSE total_execution_cost: 327336.03
-    - RMSE total_material_cost: 395337.63
-    - RMSE total_cost: 480093.31
+    - RMSE total_execution_cost: 273233.02
+    - RMSE total_material_cost: 778090.67
+    - RMSE total_cost: 1050657.69
 
-    Ou seja, o modelo tem um erro médio de R$ 327.336,03 para o custo total de execução, R$ 395.337,63 para o custo total de material e R$ 480.093,31 para o custo total do projeto.
+    Ou seja, o modelo tem erro médio de R$ 273.233,02 para o custo de execução, R$ 778.090,67 para o custo de material e R$ 1.050.657,69 para o custo total.
+    
 - O risco implícito nessa previsão é alto, devido a quantidade de dados disponíveis. Recomenda-se a coleta de mais dados para criar um modelo mais preciso e ter métricas mais confiáveis. E realizar predições baseadas apenas nas colunas do cabeçalho do projeto, como foi feito nesse experimento, talvez não seja a melhor abordagem.
