@@ -225,7 +225,7 @@ Mais dados seriam úteis para entender melhor essas relações e também criar u
 
 ### Respostas ao Desafio
 - A estimativa de custo para o "projeto 4" foi de R$ 4.012.118,72.
-- A documentação tanto do método usado para chegar ao valor previsto para o "Projeto 4", quanto das etapas e ferramentas usadas no processo estão descritas neste mesmo documento, mais informações sobre as classes e funções utilizadas estão disponíveis na pasta docs.
+- A documentação tanto do método usado para chegar ao valor previsto para o "Projeto 4", quanto das etapas e ferramentas usadas no processo estão descritas neste mesmo documento, mais informações sobre as classes e funções utilizadas estão disponíveis na pasta _docs/_.
 - O nível de acuracidade da estimativa é baixo, devido a quantidade de dados disponíveis. O modelo não generaliza bem para novos dados e não é preciso. Porém as melhores métricas obtidas foram, com base no RMSE (Root Mean Squared Error), que significa a raiz do erro quadrático médio, que é uma medida de dispersão dos dados:
     - RMSE total_execution_cost: 327336.03
     - RMSE total_material_cost: 395337.63
